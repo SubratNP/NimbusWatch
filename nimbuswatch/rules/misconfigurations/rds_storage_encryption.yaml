@@ -1,0 +1,13 @@
+rule_id: NW-AWS-RDS-002
+title: "RDS Storage Encryption Disabled"
+description: "Amazon RDS encrypted DB instances use industry standard AES-256 encryption algorithm to encrypt data on the host server, automated backups, read replicas, and snapshots. Unencrypted storage risks offline forensic data recovery."
+service: "RDS"
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+cis_control_v7: "5.2 Ensure RDS storage encryption is enabled"
+remediation_cli: "aws rds copy-db-snapshot --source-db-snapshot-identifier <snapshot_id> --target-db-snapshot-identifier <encrypted_snapshot_id> --kms-key-id <kms_key_id>"
+detection_logic:
+  check_type: "rds_storage_encryption"
+  resource_type: "rds_instance"
+  attribute: "StorageEncrypted"
+  operator: "equals"
+  expected_value: true

@@ -1,0 +1,12 @@
+rule_id: NW-AWS-CT-001
+title: "CloudTrail Multi-Region Trail Not Configured"
+description: "AWS CloudTrail must record API activity across all AWS regions to detect unauthorized lateral movement or resource creation in secondary or unmonitored regions."
+service: "CloudTrail"
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+cis_control_v7: "3.2 Ensure CloudTrail is enabled across all regions"
+remediation_cli: "aws cloudtrail update-trail --name <trail_name> --is-multi-region-trail"
+detection_logic:
+  check_type: "cloudtrail_multiregion"
+  resource_type: "cloudtrail_trail"
+  operator: "is_true"
+  expected_value: true

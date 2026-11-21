@@ -1,0 +1,13 @@
+rule_id: NW-AWS-RDS-001
+title: "RDS Database Instance is Publicly Accessible"
+description: "RDS DB instances configured with PubliclyAccessible=True resolve to a public IP address and are directly accessible from the Internet if routing and security groups permit, greatly expanding database attack surface."
+service: "RDS"
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+cis_control_v7: "5.1 Ensure RDS DB instances are not publicly accessible"
+remediation_cli: "aws rds modify-db-instance --db-instance-identifier <instance_id> --no-publicly-accessible --apply-immediately"
+detection_logic:
+  check_type: "rds_public_access"
+  resource_type: "rds_instance"
+  attribute: "PubliclyAccessible"
+  operator: "equals"
+  expected_value: false

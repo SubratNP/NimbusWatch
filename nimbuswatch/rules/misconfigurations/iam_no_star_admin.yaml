@@ -1,0 +1,12 @@
+rule_id: NW-AWS-IAM-002
+title: "IAM Policy Grants Wildcard Full Administrative Privileges"
+description: "IAM policies that specify Effect: Allow with Action: * and Resource: * grant unrestricted administrator permissions, violating the principle of least privilege and facilitating lateral movement."
+service: "IAM"
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H"
+cis_control_v7: "1.16 Ensure IAM policies do not allow full '*:*' administrative privileges"
+remediation_cli: "aws iam detach-user-policy --user-name <username> --policy-arn arn:aws:iam::aws:policy/AdministratorAccess"
+detection_logic:
+  check_type: "iam_policy_wildcard"
+  resource_type: "iam_policy"
+  operator: "does_not_contain"
+  expected_value: "*:*"

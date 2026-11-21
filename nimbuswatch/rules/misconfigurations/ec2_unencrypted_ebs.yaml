@@ -1,0 +1,12 @@
+rule_id: NW-AWS-EC2-002
+title: "EBS Default Encryption Disabled in Region"
+description: "When Elastic Block Store (EBS) encryption by default is not enabled, newly provisioned EBS storage volumes and snapshots may remain unencrypted, risking sensitive data exposure on stolen storage media."
+service: "EC2"
+severity_vector: "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+cis_control_v7: "4.4 Ensure EBS default encryption is enabled"
+remediation_cli: "aws ec2 enable-ebs-encryption-by-default"
+detection_logic:
+  check_type: "ebs_encryption_default"
+  resource_type: "ec2_region"
+  operator: "equals"
+  expected_value: true

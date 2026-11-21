@@ -1,0 +1,12 @@
+rule_id: NW-AWS-CT-002
+title: "CloudTrail Log File Validation Disabled"
+description: "CloudTrail log file integrity validation computes cryptographic hash digests for every delivered log file. Disabling this validation impedes detection of unauthorized audit tampering or log deletion."
+service: "CloudTrail"
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:H/A:N"
+cis_control_v7: "3.1 Ensure Log File Validation is enabled for AWS CloudTrail"
+remediation_cli: "aws cloudtrail update-trail --name <trail_name> --enable-log-file-validation"
+detection_logic:
+  check_type: "cloudtrail_log_validation"
+  resource_type: "cloudtrail_trail"
+  operator: "is_true"
+  expected_value: true

@@ -1,0 +1,12 @@
+rule_id: NW-AWS-S3-002
+title: "S3 Bucket Default Server-Side Encryption Disabled"
+description: "S3 bucket default encryption ensures all objects stored in the bucket are automatically encrypted at rest using AWS KMS or SSE-S3 AES-256."
+service: "S3"
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+cis_control_v7: "2.1.2 Ensure S3 Buckets are encrypted with Customer Managed Keys or AWS KMS"
+remediation_cli: "aws s3api put-bucket-encryption --bucket <bucket_name> --server-side-encryption-configuration '{\"Rules\": [{\"ApplyServerSideEncryptionByDefault\": {\"SSEAlgorithm\": \"AES256\"}}]}'"
+detection_logic:
+  check_type: "s3_encryption"
+  resource_type: "s3_bucket"
+  operator: "is_configured"
+  expected_value: true

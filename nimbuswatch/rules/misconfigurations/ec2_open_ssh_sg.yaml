@@ -1,0 +1,15 @@
+rule_id: NW-AWS-EC2-001
+title: "Security Group Allows Unrestricted Ingress to Port 22 (SSH)"
+description: "Security groups with inbound ingress rules allowing traffic from 0.0.0.0/0 or ::/0 to TCP port 22 expose underlying virtual machine hosts to internet-wide automated brute-force attacks and vulnerability exploitation."
+service: "EC2"
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+cis_control_v7: "4.1 Ensure no security groups allow ingress from 0.0.0.0/0 to port 22 (SSH)"
+remediation_cli: "aws ec2 revoke-security-group-ingress --group-id <group_id> --protocol tcp --port 22 --cidr 0.0.0.0/0"
+detection_logic:
+  check_type: "security_group_ingress"
+  resource_type: "ec2_security_group"
+  custom_params:
+    port: 22
+    disallowed_cidrs:
+      - "0.0.0.0/0"
+      - "::/0"

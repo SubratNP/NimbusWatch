@@ -1,0 +1,12 @@
+rule_id: NW-AWS-S3-001
+title: "S3 Bucket Public Access Block Disabled"
+description: "Amazon S3 Block Public Access settings prevent accidental exposure of bucket objects to unauthenticated public internet requests. Disabling any of the 4 block flags increases the risk of data leakage."
+service: "S3"
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+cis_control_v7: "2.1.1 Ensure S3 Bucket Public Access Block is enabled at the bucket level"
+remediation_cli: "aws s3api put-public-access-block --bucket <bucket_name> --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+detection_logic:
+  check_type: "s3_public_access_block"
+  resource_type: "s3_bucket"
+  operator: "all_true"
+  expected_value: true

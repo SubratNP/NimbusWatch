@@ -1,0 +1,13 @@
+rule_id: NW-AWS-IAM-001
+title: "Root Account MFA Not Enabled"
+description: "The root user account has unrestricted administrative privileges across all AWS resources. Absence of Multi-Factor Authentication (MFA) leaves the account vulnerable to catastrophic credential compromise."
+service: "IAM"
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+cis_control_v7: "1.5 Ensure MFA is enabled for the 'root' user account"
+remediation_cli: "aws iam enable-mfa-device --user-name root --serial-number arn:aws:iam::123456789012:mfa/root --authentication-code-1 123456 --authentication-code-2 654321"
+detection_logic:
+  check_type: "account_summary"
+  resource_type: "iam_account"
+  attribute: "AccountMFAEnabled"
+  operator: "equals"
+  expected_value: 1
