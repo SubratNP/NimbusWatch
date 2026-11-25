@@ -1,0 +1,10 @@
+rule_id: NW-AWS-GD-001
+title: "Amazon GuardDuty Not Enabled in Region"
+description: "GuardDuty continuously analyses CloudTrail, VPC flow and DNS logs for compromised credentials, crypto-mining and reconnaissance. Without it, active threats go undetected."
+service: GuardDuty
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+cis_control_v7: "FSBP-GuardDuty.1 GuardDuty should be enabled (AWS FSBP)"
+remediation_cli: "aws guardduty create-detector --enable"
+detection_logic:
+  check_type: guardduty_detector
+  resource_type: aws_region

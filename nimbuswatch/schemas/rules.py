@@ -3,7 +3,7 @@
 from typing import List, Dict, Any, Optional, Literal
 from pydantic import BaseModel, Field, field_validator
 
-AwsService = Literal["IAM", "S3", "EC2", "CloudTrail", "RDS"]
+AwsService = Literal["IAM", "S3", "EC2", "CloudTrail", "RDS", "KMS", "Config", "GuardDuty"]
 SeverityLevel = Literal["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"]
 
 class DetectionLogic(BaseModel):
@@ -24,16 +24,16 @@ class MisconfigurationRule(BaseModel):
     - description
     - service
     - severity_vector (CVSS v3.1 vector string)
-    - cis_control_v7 (CIS AWS Foundations Benchmark v7.0.0 reference)
+    - cis_control_v7 (CIS AWS Foundations Benchmark v7.1.0 reference)
     - remediation_cli (actionable AWS CLI command)
     - detection_logic (declarative evaluation constructs)
     """
     rule_id: str = Field(..., description="Unique rule identifier (e.g. NW-AWS-S3-001)")
     title: str = Field(..., description="Concise rule title")
     description: str = Field(..., description="Detailed description of the security check and threat rationale")
-    service: AwsService = Field(..., description="Target AWS Service (IAM, S3, EC2, CloudTrail, RDS)")
+    service: AwsService = Field(..., description="Target AWS Service (IAM, S3, EC2, CloudTrail, RDS, KMS, Config, GuardDuty)")
     severity_vector: str = Field(..., description="CVSS v3.1 vector string, e.g. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H")
-    cis_control_v7: str = Field(..., description="Mapped CIS AWS Foundations Benchmark v7.0.0 control")
+    cis_control_v7: str = Field(..., description="Mapped CIS AWS Foundations Benchmark v7.1.0 control")
     remediation_cli: str = Field(..., description="Actionable AWS CLI command for remediation")
     detection_logic: DetectionLogic = Field(..., description="Evaluation logic and parameters")
 

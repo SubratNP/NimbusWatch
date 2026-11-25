@@ -1,0 +1,10 @@
+rule_id: NW-AWS-KMS-001
+title: "KMS Customer Managed Key Rotation Disabled"
+description: "Automatic rotation limits the amount of data protected by any single key version and the impact of a compromised key. Applies to symmetric customer managed keys."
+service: KMS
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:N/A:N"
+cis_control_v7: "4.6 Ensure rotation for customer-created symmetric CMKs is enabled (CIS AWS v7.1.0 · FSBP KMS.4)"
+remediation_cli: "aws kms enable-key-rotation --key-id <key_id>"
+detection_logic:
+  check_type: kms_rotation
+  resource_type: kms_key

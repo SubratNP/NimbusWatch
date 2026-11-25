@@ -1,0 +1,10 @@
+rule_id: NW-AWS-CT-004
+title: "CloudTrail Trail Is Not Logging"
+description: "A trail that exists but has logging stopped records nothing. Stopping a trail is a common defense-evasion step, and leaves no audit record of later activity."
+service: CloudTrail
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+cis_control_v7: "FSBP-CloudTrail.1 CloudTrail should be enabled and logging management events (AWS FSBP)"
+remediation_cli: "aws cloudtrail start-logging --name <trail_name>"
+detection_logic:
+  check_type: trail_status
+  resource_type: cloudtrail_trail

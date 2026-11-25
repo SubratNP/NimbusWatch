@@ -1,0 +1,10 @@
+rule_id: NW-AWS-CFG-001
+title: "AWS Config Not Recording in Region"
+description: "AWS Config records resource configuration history. Without it there is no timeline of changes to reconstruct how a resource was misconfigured or by whom."
+service: Config
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N"
+cis_control_v7: "4.3 Ensure AWS Config is enabled in all regions (CIS AWS v7.1.0 · FSBP Config.1)"
+remediation_cli: "aws configservice put-configuration-recorder --configuration-recorder name=default,roleARN=arn:aws:iam::<account_id>:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig --recording-group allSupported=true,includeGlobalResourceTypes=true && aws configservice start-configuration-recorder --configuration-recorder-name default"
+detection_logic:
+  check_type: config_recorder
+  resource_type: aws_region

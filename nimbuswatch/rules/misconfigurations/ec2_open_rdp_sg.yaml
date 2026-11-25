@@ -1,0 +1,10 @@
+rule_id: NW-AWS-EC2-003
+title: "Security Group Allows Unrestricted Ingress to Port 3389 (RDP)"
+description: "Security groups allowing RDP from 0.0.0.0/0 or ::/0 expose Windows hosts to internet-wide password spraying and remote-desktop exploits."
+service: EC2
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+cis_control_v7: "6.3 Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports — RDP 3389 (CIS AWS v7.1.0 · FSBP EC2.53)"
+remediation_cli: "aws ec2 revoke-security-group-ingress --group-id <group_id> --protocol tcp --port 3389 --cidr 0.0.0.0/0"
+detection_logic:
+  check_type: security_group_ingress
+  resource_type: ec2_security_group

@@ -1,0 +1,10 @@
+rule_id: NW-AWS-EC2-004
+title: "VPC Default Security Group Allows Traffic"
+description: "Resources launched without an explicit security group fall into the default group. If it allows any inbound or outbound traffic, those resources are unintentionally reachable."
+service: EC2
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N"
+cis_control_v7: "6.5 Ensure the default security group of every VPC restricts all traffic (CIS AWS v7.1.0 · FSBP EC2.2)"
+remediation_cli: "aws ec2 revoke-security-group-egress --group-id <group_id> --ip-permissions '[{\"IpProtocol\":\"-1\",\"IpRanges\":[{\"CidrIp\":\"0.0.0.0/0\"}]}]'"
+detection_logic:
+  check_type: default_security_group
+  resource_type: ec2_security_group

@@ -1,0 +1,10 @@
+rule_id: NW-AWS-IAM-006
+title: "IAM Console User Without MFA"
+description: "IAM users with a console password but no MFA device can be taken over with a single phished or reused password, inheriting all of the user's permissions."
+service: IAM
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+cis_control_v7: "2.10 Ensure MFA is enabled for all IAM users that have a console password (CIS AWS v7.1.0 · FSBP IAM.5)"
+remediation_cli: "aws iam create-virtual-mfa-device --virtual-mfa-device-name <user_name>-mfa --outfile qr.png --bootstrap-method QRCodePNG  # then: aws iam enable-mfa-device --user-name <user_name> ..."
+detection_logic:
+  check_type: iam_user_mfa
+  resource_type: iam_user

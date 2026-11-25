@@ -1,0 +1,10 @@
+rule_id: NW-AWS-EC2-006
+title: "VPC Flow Logs Not Enabled"
+description: "VPC flow logs capture network traffic metadata needed to detect scanning, lateral movement and data exfiltration, and to investigate incidents."
+service: EC2
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:L/A:N"
+cis_control_v7: "4.7 Ensure VPC flow logging is enabled in all VPCs (CIS AWS v7.1.0 · FSBP EC2.6)"
+remediation_cli: "aws ec2 create-flow-logs --resource-type VPC --resource-ids <vpc_id> --traffic-type REJECT --log-destination-type s3 --log-destination arn:aws:s3:::<log_bucket>"
+detection_logic:
+  check_type: vpc_flow_logs
+  resource_type: ec2_vpc

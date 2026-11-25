@@ -1,0 +1,10 @@
+rule_id: NW-AWS-S3-003
+title: "S3 Bucket Policy Does Not Deny HTTP Requests"
+description: "Without a bucket policy that denies requests where aws:SecureTransport is false, objects can be read or written over unencrypted HTTP and intercepted in transit."
+service: S3
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+cis_control_v7: "3.1.1 Ensure S3 Bucket Policy is set to deny HTTP requests (CIS AWS v7.1.0 · FSBP S3.5)"
+remediation_cli: "aws s3api put-bucket-policy --bucket <bucket_name> --policy '{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"DenyInsecureTransport\",\"Effect\":\"Deny\",\"Principal\":\"*\",\"Action\":\"s3:*\",\"Resource\":[\"arn:aws:s3:::<bucket_name>\",\"arn:aws:s3:::<bucket_name>/*\"],\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}}}]}'"
+detection_logic:
+  check_type: s3_bucket_policy_tls
+  resource_type: s3_bucket

@@ -1,0 +1,10 @@
+rule_id: NW-AWS-S3-005
+title: "S3 Bucket Server Access Logging Disabled"
+description: "Server access logs record every request made to a bucket. Without them, investigating data access or exfiltration after an incident is not possible."
+service: S3
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:L/A:N"
+cis_control_v7: "FSBP-S3.9 S3 general purpose buckets should have server access logging enabled (AWS FSBP)"
+remediation_cli: "aws s3api put-bucket-logging --bucket <bucket_name> --bucket-logging-status '{\"LoggingEnabled\":{\"TargetBucket\":\"<log_bucket>\",\"TargetPrefix\":\"<bucket_name>/\"}}'"
+detection_logic:
+  check_type: s3_bucket_logging
+  resource_type: s3_bucket

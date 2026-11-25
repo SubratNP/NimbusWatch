@@ -1,0 +1,10 @@
+rule_id: NW-AWS-RDS-005
+title: "RDS Automated Backups Disabled or Under 7 Days"
+description: "Automated backups enable point-in-time recovery from ransomware, accidental deletion or corruption. A retention period of 0 disables them entirely."
+service: RDS
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:N/A:H"
+cis_control_v7: "FSBP-RDS.11 RDS instances should have automatic backups enabled (AWS FSBP)"
+remediation_cli: "aws rds modify-db-instance --db-instance-identifier <instance_id> --backup-retention-period 7 --apply-immediately"
+detection_logic:
+  check_type: rds_attribute
+  resource_type: rds_instance

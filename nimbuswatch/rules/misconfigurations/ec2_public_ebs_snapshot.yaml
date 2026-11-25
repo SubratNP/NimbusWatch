@@ -1,0 +1,10 @@
+rule_id: NW-AWS-EC2-007
+title: "EBS Snapshot Is Publicly Restorable"
+description: "A public EBS snapshot can be copied and mounted by any AWS account, exposing the full contents of the disk including secrets, databases and source code."
+service: EC2
+severity_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+cis_control_v7: "FSBP-EC2.1 Amazon EBS snapshots should not be publicly restorable (AWS FSBP)"
+remediation_cli: "aws ec2 modify-snapshot-attribute --snapshot-id <snapshot_id> --attribute createVolumePermission --operation-type remove --group-names all"
+detection_logic:
+  check_type: ebs_snapshot_permissions
+  resource_type: ec2_snapshot

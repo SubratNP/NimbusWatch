@@ -4,8 +4,9 @@ from nimbuswatch.aws.mock_data import MockEnvironment
 from nimbuswatch.engine import catalog, scanner
 
 
-def test_rule_catalogue_loads_ten_rules():
-    assert len(catalog.get_misconfiguration_rules()) == 10
+def test_rule_catalogue_loads_all_rules():
+    # 10 original rules + 24 extended CIS v7.1.0 / FSBP rules
+    assert len(catalog.get_misconfiguration_rules()) == 34
 
 
 def test_scanner_detects_seeded_misconfigurations():

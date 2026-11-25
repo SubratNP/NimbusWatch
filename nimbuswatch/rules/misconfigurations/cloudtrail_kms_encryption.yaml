@@ -1,0 +1,10 @@
+rule_id: NW-AWS-CT-003
+title: "CloudTrail Logs Not Encrypted With KMS"
+description: "Encrypting trail logs with a customer managed KMS key adds an access-control layer: reading the logs requires kms:Decrypt in addition to S3 read access."
+service: CloudTrail
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:N/A:N"
+cis_control_v7: "4.5 Ensure CloudTrail logs are encrypted at rest using KMS CMKs (CIS AWS v7.1.0 · FSBP CloudTrail.2)"
+remediation_cli: "aws cloudtrail update-trail --name <trail_name> --kms-key-id <kms_key_arn>"
+detection_logic:
+  check_type: trail_encryption
+  resource_type: cloudtrail_trail

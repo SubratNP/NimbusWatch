@@ -1,0 +1,10 @@
+rule_id: NW-AWS-EC2-005
+title: "EC2 Instance Does Not Require IMDSv2"
+description: "With IMDSv1 allowed, a server-side request forgery (SSRF) bug in any application on the host can read the instance role's temporary credentials from the metadata service."
+service: EC2
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:L/A:N"
+cis_control_v7: "6.7 Ensure that the EC2 Metadata Service only allows IMDSv2 (CIS AWS v7.1.0 · FSBP EC2.8)"
+remediation_cli: "aws ec2 modify-instance-metadata-options --instance-id <instance_id> --http-tokens required --http-endpoint enabled"
+detection_logic:
+  check_type: instance_metadata_options
+  resource_type: ec2_instance

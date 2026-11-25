@@ -1,0 +1,10 @@
+rule_id: NW-AWS-IAM-003
+title: "Root Account Has Active Access Keys"
+description: "Access keys on the root user grant unrestricted, non-MFA-protected programmatic control of the entire account. Leaked root keys cannot be scoped down and are a common cause of full account compromise."
+service: IAM
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H"
+cis_control_v7: "2.4 Ensure no 'root' user account access key exists (CIS AWS v7.1.0 · FSBP IAM.4)"
+remediation_cli: "aws iam list-access-keys  # sign in as root, then delete each key: aws iam delete-access-key --access-key-id <access_key_id>"
+detection_logic:
+  check_type: account_summary
+  resource_type: iam_account

@@ -1,0 +1,10 @@
+rule_id: NW-AWS-CT-005
+title: "CloudTrail S3 Bucket Access Logging Disabled"
+description: "Access logging on the bucket that stores CloudTrail logs shows who read or tampered with the audit trail itself."
+service: CloudTrail
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:L/A:N"
+cis_control_v7: "4.4 Ensure server access logging is enabled on the CloudTrail S3 bucket (CIS AWS v7.1.0 · FSBP CloudTrail.7)"
+remediation_cli: "aws s3api put-bucket-logging --bucket <bucket_name> --bucket-logging-status '{\"LoggingEnabled\":{\"TargetBucket\":\"<log_bucket>\",\"TargetPrefix\":\"<bucket_name>/\"}}'"
+detection_logic:
+  check_type: trail_bucket_logging
+  resource_type: s3_bucket

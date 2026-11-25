@@ -1,0 +1,10 @@
+rule_id: NW-AWS-IAM-008
+title: "IAM User Has Policies Attached Directly"
+description: "Granting permissions directly to users instead of through groups or roles makes access hard to review and revoke, and leads to privilege creep."
+service: IAM
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N"
+cis_control_v7: "2.13 Ensure IAM users receive permissions only through groups (CIS AWS v7.1.0 · FSBP IAM.2)"
+remediation_cli: "aws iam detach-user-policy --user-name <user_name> --policy-arn <policy_arn>  # grant via a group: aws iam add-user-to-group --user-name <user_name> --group-name <group_name>"
+detection_logic:
+  check_type: iam_user_policies
+  resource_type: iam_user

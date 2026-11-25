@@ -1,0 +1,10 @@
+rule_id: NW-AWS-RDS-006
+title: "RDS Deletion Protection Disabled"
+description: "Without deletion protection, a single API call from a compromised or mistaken principal permanently deletes the database."
+service: RDS
+severity_vector: "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:N/A:H"
+cis_control_v7: "3.2.5 Ensure deletion protection is enabled for RDS instances (CIS AWS v7.1.0 · FSBP RDS.8)"
+remediation_cli: "aws rds modify-db-instance --db-instance-identifier <instance_id> --deletion-protection --apply-immediately"
+detection_logic:
+  check_type: rds_attribute
+  resource_type: rds_instance
