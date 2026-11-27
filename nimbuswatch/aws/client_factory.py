@@ -43,7 +43,13 @@ class AWSClientFactory:
         else:
             # Ensure Moto is stopped if previously active
             MockEnvironment.get_instance().stop()
-            
+
+            # Drop the dummy credentials mock mode put in the environment, otherwise boto3 would
+            # pick them up ahead of the user's real credential chain (~/.aws, SSO, instance role).
+            for var in ("AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_SECURITY_TOKEN", "AWS_SESSION_TOKEN"):
+                if os.environ.get(var) == "testing":
+                    os.environ.pop(var)
+
             # Build live session parameters respecting settings / environment
             session_kwargs: Dict[str, Any] = {"region_name": settings.AWS_REGION}
             if settings.AWS_PROFILE:
